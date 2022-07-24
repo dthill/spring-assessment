@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Admin</title>
+</head>
+<body>
+<p th:text="${error}"></p>
+<h1>Purchase Admin</h1>
+<form action="#" method="get" th:action="@{/purchase-admin}" th:object="${purchaseFilter}">
+    <label for="purchasedOn">Filter by purchased On</label>
+    <select id="purchasedOn" th:field="*{date}" >
+        <option value="01/01/0001" ></option>
+        <option
+                th:each="purchaseDate : ${purchaseAdmin.getFormattedDates()}"
+                th:text="${purchaseDate}"
+                th:value="${purchaseDate}"
+        >
+        </option>
+    </select>
+    <input type="submit" value="Filter">
+</form>
+<form action="#" method="get" th:action="@{/purchase-admin}" th:object="${purchaseFilter}">
+    <label for="category">Filter by category</label>
+    <select id="category" th:field="*{categoryId}" >
+        <option th:value="${null}"></option>
+        <option
+                th:each="purchaseCategory : ${purchaseAdmin.getCategories()}"
+                th:text="${purchaseCategory.getName()}"
+                th:value="${purchaseCategory.getId()}"
+        >
+        </option>
+    </select>
+    <input type="submit" value="Filter">
+</form>
+<table>
+    <tr>
+        <td>Purchased On</td>
+        <td>Purchase Id</td>
+        <td>Username</td>
+        <td>User id</td>
+        <td>Products</td>
+    </tr>
+    <tr th:each="pruchase : ${purchaseAdmin.getPurchases()}">
+        <td th:text="${pruchase.getPurchasedOn()}"></td>
+        <td th:text="${pruchase.getId()}"></td>
+        <td th:text="${pruchase.getBuyer().getUsername()}"></td>
+        <td th:text="${pruchase.getBuyer().getId()}"></td>
+        <td th:text="${pruchase.getProducts()}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Admin</title>
+</head>
+<body>
+<p th:text="${error}"></p>
+<h1>User Admin</h1>
+<form action="/user-admin" method="get">
+    <input id="name" name="name" type="text">
+    <input type="submit" value="Search">
+</form>
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Username</td>
+        <td>Roles</td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getAuthorities()}"></td>
+    </tr>
+</table>
+</body>
+</html>

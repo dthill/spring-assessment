@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <style>
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div th:if="${user == null}">
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+</div>
+<div th:if="${user != null}">
+    <p>Logged in as
+        <span th:text="${user}"></span>
+    </p>
+    <a href="/cart">Cart</a>
+    <a href="/logout">Logout</a>
+    <a href="/admin" th:if="${admin}">Admin Panel</a>
+</div>
+<h1>Sporty Shoes</h1>
+<p th:if="${purchaseSuccess}">Item added to cart</p>
+<h2>Products</h2>
+<ul>
+    <li th:each="listProduct : ${products}">
+        <h3 th:text="${listProduct.getName()}"></h3>
+        <img alt="shoes photo" src="https://placehold.jp/150x150.png">
+        <p th:text="${listProduct.getDescription()}"></p>
+        $<strong th:text="${listProduct.price}"></strong>
+        <form method="post" th:action="@{/purchase}" th:if="${user != null}"
+              th:object="${productId}">
+            <input id="id" name="id" th:value="${listProduct.id}" type="hidden">
+            <input type="submit" value="Add to Cart">
+        </form>
+        <div>
+            <input Value="Login/Register to buy" disabled th:if="${user == null}" type="submit">
+        </div>
+    </li>
+</ul>
+</body>
+</html>

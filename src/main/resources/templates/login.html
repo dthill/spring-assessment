@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Login</h1>
+<div sec:authorize="isAuthenticated()">
+    <p>You are already logged in</p>
+    <a href="/logout">Logout</a>
+</div>
+<div sec:authorize="isAnonymous()">
+    <form method="post" th:action="@{/login}">
+        <p th:if="${param.error}">
+            Invalid username and password.
+        </p>
+        <p th:if="${param.logout}">
+            You have been logged out.
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <label for="username">Username</label>
+                </td>
+                <td>
+                    <input id="username" name="username" type="text"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="password">Password</label>
+                </td>
+                <td>
+                    <input id="password" name="password" type="password"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Login">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

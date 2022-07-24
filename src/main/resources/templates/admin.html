@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+</head>
+<body>
+<p th:text="${error}"></p>
+<a href="/user-admin">User Admin</a>
+<a href="/purchase-admin">Purchase Admin</a>
+
+<h1>Admin Panel</h1>
+<h2>Add/Edit Product Categories</h2>
+<form action="#" method="post" th:action="@{/admin-category}" th:object="${category}">
+    <table>
+        <tr>
+            <td>
+                <label for="id">Category Id</label>
+            </td>
+            <td>
+                <input id="id" th:field="*{id}" type="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="name">Category Name</label>
+            </td>
+            <td>
+                <input id="name" th:field="*{name}" type="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Add/Edit">
+            </td>
+        </tr>
+    </table>
+    <p th:if="${categorySuccess}">Category added/edited successfully</p>
+</form>
+<h2>Categories</h2>
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+    </tr>
+    <tr th:if="${categories.size() == 0}">
+        <td>No categories found</td>
+    </tr>
+    <tr th:each="category : ${categories}">
+        <td th:text="${category.id}"></td>
+        <td th:text="${category.name}"></td>
+    </tr>
+</table>
+<hr>
+<h2>Add/Edit Products</h2>
+<form action="#" method="post" th:action="@{/admin-product}" th:object="${product}">
+    <table>
+        <tr>
+            <td>
+                <label for="id">Product Id</label>
+            </td>
+            <td>
+                <input id="id" th:field="*{id}" type="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="name">Product Name</label>
+            </td>
+            <td>
+                <input id="name" th:field="*{name}" type="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="description">Product Description</label>
+            </td>
+            <td>
+                <input id="description" th:field="*{description}" type="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="price">Product Price</label>
+            </td>
+            <td>
+                <input id="price" th:field="*{price}" type="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="categories">Product Categories</label>
+            </td>
+            <td>
+                <select id="categories" th:field="*{productCategories}" th:multiple="true">
+                    <option
+                            th:each="category : ${categories}"
+                            th:text="${category.getName()}"
+                            th:value="${category.getId()}"
+                    >
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Add/Edit">
+            </td>
+        </tr>
+    </table>
+    <p th:if="${productSuccess}">Product added/edited successfully</p>
+</form>
+<h2>Products</h2>
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Description</td>
+        <td>Price</td>
+        <td>Category</td>
+    </tr>
+    <tr th:if="${products.size() == 0}">
+        <td>No products found</td>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.getId()}"></td>
+        <td th:text="${product.getName()}"></td>
+        <td th:text="${product.getDescription()}"></td>
+        <td th:text="${product.getPrice()}"></td>
+        <td th:text="${product.getProductCategories()}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

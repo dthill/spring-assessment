@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+</head>
+<body>
+<h1>Cart</h1>
+<p th:if="${purchaseSuccess}">Purchase completed successfully. Items will be shipped shortly.</p>
+<p th:text="${error}"></p>
+<h2>Products in Cart</h2>
+<table>
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>price</td>
+    </tr>
+    <tr th:each="product : ${cart.getPurchase().getProducts()}">
+        <td th:text="${product.getId()}"></td>
+        <td th:text="${product.getName()}"></td>
+        <td th:text="${product.getPrice()}"></td>
+    </tr>
+    <tr>
+        <td><strong>Total:</strong></td>
+        <td></td>
+        <td>$ <strong th:text="${cart.getTotal()}"></strong></td>
+    </tr>
+</table>
+<br>
+<form method="post" th:action="@{/buy-cart}"
+      th:object="${completeCart}">
+    <table>
+        <tr>
+            <td>
+                <label for="credit-card">Credit Card</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input name="purchaseId" th:value="${cart.getPurchase().getId()}" type="hidden">
+                <input id="credit-card" th:field="*{creditCardNumber}" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Buy Now" th:disabled="${cart.getPurchase().getProducts().size() == 0}"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
