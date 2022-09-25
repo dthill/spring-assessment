@@ -4,13 +4,14 @@ pipeline {
         pollSCM('* * * * *')
     }
     environment {
-        ENV = credentials('sporty-shoes')
+        DB_USER = credentials('SPORTY_DB_USER')
+        DB_PASSWORD = credentials('SPORTY_DB_PASSWORD')
+        DB_NAME = credentials('SPORTY_DB_NAME')
     }
     stages {
         stage('Build') {
             steps {
                 git url: 'https://github.com/dthill/spring-assessment.git', branch: 'main'
-                sh "echo $ENV>>.env"
                 sh "docker compose build"
             }
         }
