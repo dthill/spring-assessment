@@ -3,10 +3,14 @@ pipeline {
     triggers {
         pollSCM('* * * * *')
     }
+    environment {
+        ENV = credentials('sporty-shoes')
+    }
     stages {
         stage('Build') {
             steps {
                 git url: 'https://github.com/dthill/spring-assessment.git', branch: 'main'
+                sh "cat $ENV >> .env"
                 sh "docker compose build"
             }
         }
